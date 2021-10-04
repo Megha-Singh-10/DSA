@@ -311,3 +311,52 @@ public:
         return nums;
     }
 };
+
+10) Missing Number (range [0, n])
+ 
+ TC-> O(N)
+ SC->O(1)
+ 
+ class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n=nums.size();
+        int result=n*(n+1)/2;
+        int sum=0;
+        for(int i:nums)
+            sum+=i;
+        return result-sum;
+    }
+};
+
+11) Contains Duplicate
+
+a) TC->O(NlogN) //TC->O(N) if unordered_set is used
+SC->O(N)
+
+#include <set>
+using namespace std;
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        return nums.size() > set<int>(nums.begin(), nums.end()).size();        
+    }
+};
+
+b) TC->O(NlogN)
+SC->O(1)
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i=1;i<n;i++)
+        {
+            if(nums[i]==nums[i-1])
+                return true;
+        }
+        return false;
+    }
+};
