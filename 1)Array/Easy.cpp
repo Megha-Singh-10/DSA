@@ -312,7 +312,7 @@ public:
     }
 };
 
-10) Missing Number (range [0, n])
+11) Missing Number (range [0, n])
  
  TC-> O(N)
  SC->O(1)
@@ -329,7 +329,7 @@ public:
     }
 };
 
-11) Contains Duplicate
+12) Contains Duplicate
 
 a) TC->O(NlogN) //TC->O(N) if unordered_set is used
 SC->O(N)
@@ -361,7 +361,7 @@ public:
     }
 };
 
-12a) Climbing Stairs(1 or 2 steps)
+13a) Climbing Stairs(1 or 2 steps)
 
 TC-> O(N)
 SC->O(1)
@@ -378,7 +378,7 @@ public:
     }
 };
 
-12b) Climbing Stairs (1 or 3 or 5 steps)
+13b) Climbing Stairs (1 or 3 or 5 steps)
 
 dp[i]=dp[i-1]+dp[i-3]+dp[i-5];
 
@@ -407,7 +407,7 @@ public:
     }
 }; 
 
-13) Fibbonaci Series
+14) Fibbonaci Series
 
 TC->O(N)
 SC->O(1)
@@ -421,5 +421,133 @@ public:
         for(int i=2;i<=n;i++)
             dp[i%2]=dp[0]+dp[1];
         return dp[n%2];
+    }
+};
+
+15) Two Sum II - Input array is sorted
+
+TC -> O(N)
+SC -> O(1)
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& a, int target) {
+        vector<int> result;
+        int low=0,high=a.size()-1;
+        while(low<high)
+        {
+            if(a[low]+a[high]==target)
+            {
+                result.push_back(low+1);
+                result.push_back(high+1);
+                break;
+            } 
+            else if(a[low]+a[high]<target)
+                low++;
+            else if(a[low]+a[high]>target)
+                high--;               
+        }        
+        return result;
+    }
+};
+
+16) Majority Element 
+
+a) TC -> O(NlogN)
+   SC -> O(1)
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count=1;
+        int n=nums.size()/2;     
+        sort(nums.begin(),nums.end());
+        if(nums.size()==1)
+            return nums[0];
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]!=nums[i-1])
+                count=1;
+            else
+                count++;
+            if(count>n)
+            {   cout<<count;
+                return nums[i];
+            }
+        }
+        return 0;
+    }
+};
+
+b) //Boyer-Moore Majority Vote Algorithm
+
+TC -> O(N) 
+SC -> O(1)
+
+public class Solution {
+    public int majorityElement(int[] num) {
+
+        int major=num[0], count = 1;
+        for(int i=1; i<num.length;i++){
+            if(count==0){
+                count++;
+                major=num[i];
+            }else if(major==num[i]){
+                count++;
+            }else count--;
+            
+        }
+        return major;
+    }
+}
+
+17) Pascal's Triangle
+//Display Triangle
+
+TC -> O(N^2)
+SC -> O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+       vector<vector<int>> pascal;
+        for(int i=1;i<=numRows;i++)
+        {
+            vector<int> row(i);
+            row[0]=1;
+            row[i-1]=1;
+            for(int j=1;j<i-1;j++)
+            { //if(row[j]!=1)
+              row[j]=pascal[i-2][j]+pascal[i-2][j-1];   
+            }    
+            pascal.push_back(row);
+        }
+        return pascal;
+    }
+};
+
+18) Pascal's Triangle 2 
+//Display Row
+
+TC -> O(N^2)
+SC -> O(N)
+
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+       vector<int> result;
+        if(rowIndex<0)
+            return result;
+        result.push_back(1);
+        for(int i=1;i<=rowIndex;i++)
+        {
+            result.resize(i+1);
+            result[0]=result[i]=1;
+            for(int j=i-1;j>0;j--)
+            {
+                result[j]=result[j]+result[j-1];
+            }
+        }
+        return result;
     }
 };
