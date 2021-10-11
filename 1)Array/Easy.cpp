@@ -551,3 +551,67 @@ public:
         return result;
     }
 };
+
+19) Valid Palindrome (String)
+
+TC-> O(N)
+SC->O(1)
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+       //int half=s.length()/2;
+        int i=0;
+        int j=s.length()-1;
+       // s=tolower(s);
+       for_each(s.begin(), s.end(), [](char & c){
+    c = toupper(c);
+});
+       while(i<=j)
+       {
+           if(!isalnum(s[i])){ 
+               i++;
+               continue;
+           }
+           if(!isalnum(s[j])) {
+               j--;
+               continue;
+           }   
+               if(s[i]!=s[j]) //if (toupper(s[i]) != toupper(s[j]))
+                   return false;          
+           i++;
+           j--;
+       }
+        return true;
+    }
+};
+
+20) Convert 1D Array Into 2D Array
+
+a) TC-> O(N^2)
+SC-> O(N^2)
+
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
+        vector<vector<int>> newArray(m,vector<int>(n));
+        vector<vector<int>> no; //to return empty array
+        if(original.size()!=m*n)
+            return no;
+        int k=0;
+       for(int i=0;i<m;i++)
+       {
+           for(int j=0;j<n;j++)
+           {
+               newArray[i][j]=original[k++];
+           }
+       }
+        return newArray;
+    }
+};
+
+b) TC-> O(N)
+SC-> O(N^2)
+
+for(int i=0;i<original.length;i++)
+		result[i/n][i%n] = original[i];
