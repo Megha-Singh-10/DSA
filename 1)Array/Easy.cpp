@@ -615,3 +615,42 @@ SC-> O(N^2)
 
 for(int i=0;i<original.length;i++)
 		result[i/n][i%n] = original[i];
+
+21) Maximum Subarray (Kadane's Algorithm)
+TC-> O(N)
+SC-> O(1)
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum=0,maxi=INT_MIN;
+        for(int i: nums)
+        {
+            sum+=i;
+            maxi=max(sum,maxi);
+            if(sum<0) sum=0;
+        }
+        return maxi;
+    }
+};
+
+22) Contains Duplicate II (Based on condition)
+TC-> O(N)
+SC-> O(N)
+
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        unordered_map<int,int> m;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(m.find(nums[i])==m.end()) m[nums[i]]=i;
+            else
+            {
+                if(abs(m[nums[i]]-i)<=k) return true;
+                m[nums[i]]=i;
+            }
+        }
+        return false;
+    }
+};
