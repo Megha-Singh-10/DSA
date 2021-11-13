@@ -673,3 +673,211 @@ public:
         }
     }
 };
+
+24) Intersection of two array
+
+a) TC-> O(N)
+SC-> O(N)
+
+class Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int,int> m;
+        vector<int> result;
+        int small,big;
+        if(nums1.size()<nums2.size()) 
+        {
+            big=nums2.size();
+            small=nums1.size();
+        for(int i=0;i<small;i++)
+        {
+            if(m.find(nums1[i])==m.end())
+            {
+                m[nums1[i]]=0;                
+            }
+        }
+            
+         for(int i=0;i<big;i++)
+         {
+             if(m.find(nums2[i])!=m.end())
+             {
+                 m[nums2[i]]=1;
+             }  
+         }          
+        }
+        else
+        {
+             big=nums1.size();
+            small=nums2.size();
+        for(int i=0;i<small;i++)
+        {
+            if(m.find(nums2[i])==m.end())
+            {
+                m[nums2[i]]=0;
+            }
+        }
+         for(int i=0;i<big;i++)
+         {
+             if(m.find(nums1[i])!=m.end())
+             {
+                 m[nums1[i]]=1;                
+             }
+         }
+          
+        }     
+        
+       // for(auto j=m.begin();j!=m.end();++j)
+        for(auto i:m)
+          {
+              if(i.second>0)
+                  result.push_back(i.first);   //j->first       
+            //cout<<i.first<<" "<<i.second<<"\n";
+          }                
+        return result;
+    }
+};
+
+b) TC-> O(N*N)
+   SC-> O(N)
+
+vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+    set<int> s(nums1.begin(), nums1.end());
+    vector<int> out;
+    for (int x : nums2)
+        if (s.erase(x)) //erase TC->O(N)
+            out.push_back(x);
+    return out;
+}
+
+25) Intersection of two arrays 2
+
+a) TC-> O(N*M) //M-> no of times one element is repeated
+SC->O(N)
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {       
+        vector<int> result;
+        //if(nums1.size()>nums2.size()) result=intersect(nums2,nums1);
+        unordered_map<int,pair<int,int>> m;
+        for(int i:nums1)
+        {
+            if(m.find(i)==m.end())
+            {
+                m[i].first=1;
+                m[i].second=0;
+            }
+            else
+                m[i].first++;
+        }
+        for(int i:nums2)
+        {
+            if(m.find(i)!=m.end())
+            {
+                m[i].second++;
+            }
+        }
+        for(auto i:m)
+        {//cout<<"\n "<<i.first<<" "<<i.second.first<<" "<<i.second.second;
+            int n=i.second.first<=i.second.second? i.second.first : i.second.second;
+            while(n)
+            {
+              result.push_back(i.first);
+              n--;
+            }
+        }
+        return result;
+    }
+};
+
+b) TC-> O(N+M) //N is size of num1 and M is size of num2
+   SC-> O(N+M)
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        unordered_map<int, int> dict;
+        vector<int> res;
+        for(int i = 0; i < (int)nums1.size(); i++) dict[nums1[i]]++;
+        for(int i = 0; i < (int)nums2.size(); i++)
+            if(--dict[nums2[i]] >= 0) res.push_back(nums2[i]);
+        return res;
+    }
+};   
+
+26) Reshape the matrix
+TC-> O(N*N)
+SC-> O(N*N)
+
+a) class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+       // if(mat[0].size()==r && mat.size()==c)
+       //     return mat;
+        int m=mat.size();
+        int n=mat[0].size();
+        if(n*m!=r*c)
+            return mat;
+       vector<vector<int>> result(r,vector<int>(c));
+        int row=0,col=0;       
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {               
+                result[row][col]=mat[i][j];
+                // col=(col+1)%n;
+                // if(col==0)
+                //     row++;
+                if(col<c-1) col++;
+                else if(col==c-1)
+                {
+                    col=0;
+                    row++;
+                }
+            }            
+        }
+        return result;
+    }
+};
+
+b) class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+       //if(mat.size()==r && mat[0].size()==c)
+         //   return mat;
+        int m=mat.size();
+        int n=mat[0].size();
+        if(n*m!=r*c)
+            return mat;
+       vector<vector<int>> result(r,vector<int>(c));
+        int row=0,col=0;       
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {               
+                //result[row][col]=mat[i][j];
+                result[i][j]=mat[row][col];
+                col=(col+1)%n;
+                if(col==0)
+                    row++;                
+            }            
+        }
+        return result;
+    }
+};
+
+c) matrix traversal in one loop-> matrix[index / width][index % width]
+
+TC-> O(r*c)
+SC-> O(r*c)
+
+vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int m = mat.size(), n = mat[0].size();
+        if(n*m != r*c)return mat;
+        vector<vector<int>>v(r, vector<int>(c,0));
+        for(int i = 0; i<r*c; i++)        
+            v[i/c][i%c] = mat[i/n][i%n];
+        return v;
+    }
+
+27) Palindrome
