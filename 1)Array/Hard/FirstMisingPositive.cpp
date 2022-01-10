@@ -1,4 +1,10 @@
-1) Find First Mising Postive
+1) First Mising Postive(NO 41)
+
+/* Given an unsorted integer array nums, return the smallest missing positive integer.
+
+You must implement an algorithm that runs in O(n) time and uses constant extra space.
+
+ */
 
 a) TC->O(NlogN)
 SC->O(N)
