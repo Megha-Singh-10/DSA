@@ -110,3 +110,37 @@ vector<string> ans(numRows,"")
 // Second traversal from end of vector (from index size-2 because we have already added element at size-1 in first traversal) till the 1st index (leaving 0th index because we'll add element to that in next iteration)
 
 // these 2 traversal make one iteration , we'll repeat that until end of string, finally add all the strings present in the vector :)
+
+c) TC->O(N)
+SC-> O(N)
+
+string convert(string s, int nRows) {
+    
+    if (nRows <= 1)
+        return s;
+
+    const int len = (int)s.length();
+    string *str = new string[nRows];
+
+    int row = 0, step = 1;
+    for (int i = 0; i < len; ++i)
+    {
+        str[row].push_back(s[i]);
+
+        if (row == 0)
+            step = 1;
+        else if (row == nRows - 1)
+            step = -1;
+
+        row += step;
+    }
+
+    s.clear();
+    for (int j = 0; j < nRows; ++j)
+    {
+        s.append(str[j]);
+    }
+
+    delete[] str;
+    return s;
+}
