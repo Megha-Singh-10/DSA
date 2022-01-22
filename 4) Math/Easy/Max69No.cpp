@@ -3,13 +3,13 @@
 
 Return the maximum number you can get by changing at most one digit (6 becomes 9, and 9 becomes 6).*/
 
-TC->O(N)
+TC->O(NlogN)
 SC->O(1)
 
 class Solution {
 public:
     int maximum69Number (int num) {
-        int rem=num,q=num,div=pow(10,(int)log10(rem));
+        int rem=num,q=num,div=pow(10,(int)log10(rem));//logn time
         
         q=rem/div;  
         rem=rem%div;
@@ -31,7 +31,10 @@ public:
     }
 };
 
-b) class Solution {
+b) TC->O(N)
+SC->O(1)
+
+class Solution {
 public:
     int maximum69Number (int num) {
         string s_num = to_string(num);
