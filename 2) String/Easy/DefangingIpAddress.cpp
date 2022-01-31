@@ -24,3 +24,23 @@ public:
         return result;
     }
 };
+
+b) class Solution {
+public:
+    string defangIPaddr(string address) {
+        string res;
+        for(auto c: address) {
+            if(c=='.') {
+                res+="[.]";
+            } else res+=c;
+        }
+        return res;
+    }
+};
+
+c) TC->Running a DFA-compiled regular expression against a string is indeed O(n), but can require up to O(2^m) construction time/space (where m = regular expression size).
+SC->O(1)
+
+string defangIPaddr(string address) {
+  return regex_replace(address, regex("[.]"), "[.]");
+}
