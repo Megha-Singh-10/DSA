@@ -144,3 +144,54 @@ string convert(string s, int nRows) {
     delete[] str;
     return s;
 }
+
+d) TC->O(N)
+   SC->O(N)
+
+   class Solution {
+public:
+    string convert(string s, int numRows) {
+        int pos=0;
+        bool incr=true;
+        map<int,string> m;
+        string res="";
+        for(int i=0;i<s.length();i++)
+        {
+            if(pos==numRows)
+                incr=false;
+            if(pos==1)
+                incr=true;
+            if(incr)
+                pos++;
+            else
+                pos--;
+            // if(m.find(pos)==m.end())
+                // m[pos]="";
+            m[pos]+=s[i];
+        }
+        for(auto i:m)
+        {
+           res+=i.second;           
+        }
+        return res;
+    }
+};
+
+e) TC->O(N*N)
+SC->O(1)
+
+for(i->n-1)
+{
+    for(j=0->(i+j)<len)
+    {
+        if(i==0||i==len-1)
+        j+=2*(numRows-1);
+        else
+        {
+            if(down)
+            j+=2*(numRows-1-i);
+            else
+            j+=2*i;
+        }
+    }
+}
